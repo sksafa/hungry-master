@@ -1,6 +1,10 @@
 
 const foodItem = document.getElementById('foodItem');
+const parentClass = document.getElementById('parentClass');
+const foodDetails = document.getElementById('foodDetails');
+const errorHandel = document.getElementById('errorHandel');
 const itemList = document.querySelectorAll('.itemList');
+
 
 document.getElementById('searchFood').addEventListener('click', function(){
     const food = document.getElementById('foodName');
@@ -22,18 +26,29 @@ document.getElementById('searchFood').addEventListener('click', function(){
               </div>
                 `  
             });
-        }else{} 
-        foodItem.innerHTML=foodMeal;  
+            foodItem.innerHTML=foodMeal; 
+            errorHandel.style.display="none";
+            parentClass.style.display="block";
+
+        }else{
+          foodMeal =`
+           <h3>Meals not find</h3>
+          `;
+          errorHandel.innerHTML=foodMeal; 
+          parentClass.style.display="none";
+          errorHandel.style.display="block";
+
+        } 
+         
     } )
     .catch(error => {
         let foodMeal =`
-        <div class="col-md-3 mb-3">
-        <div class="card h-100  shadow  p-3 ">
-          <h1> result not found</h1>
-        </div>
-      </div>
+          <h3> Search not found.Please Search With First Letter </h3>
         `
-        foodItem.innerHTML=foodMeal; 
+        errorHandel.innerHTML = foodMeal;
+        parentClass.style.display="none";
+        errorHandel.style.display="block";
+ 
 
     })
 
@@ -45,21 +60,26 @@ function food(idMeal){
   fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
   .then(res=> res.json())
   .then(data =>{
-
-     console.log(data);
      const foodObject = data.meals[0];
-     console.log(foodObject);
-     const mealItem1 =  foodObject.strIngredient1;
-     const mealItem2 =  foodObject.strIngredient2;
-     const mealItem3 =  foodObject.strIngredient3;
-     const mealItem4 =  foodObject.strIngredient4;
-     const mealItem5 =  foodObject.strIngredient5;
-     const mealItem6 =  foodObject.strIngredient6;
-     console.log(mealItem1);
-     console.log(mealItem2);
-     console.log(mealItem3);
-     console.log(mealItem4);
-     console.log(mealItem5);
-     console.log(mealItem6);
+    let ingredient = `
+    <div class="card h-100  shadow card_radius p-3 ">
+    <img src="${foodObject.strMealThumb}" class="card-img-top card-bg " alt="...">
+    <div class="card-body">
+      <h5 class="card-title fw-bold">${foodObject.strMeal}</h5>
+      <h6>Ingredient</h6>
+      <li><span><i class="fas fa-check-square orange"></i> </span> ${foodObject.strIngredient1} </li>
+      <li><span><i class="fas fa-check-square orange"></i> </span> ${foodObject.strIngredient2} </li>
+      <li><span><i class="fas fa-check-square orange"></i> </span> ${foodObject.strIngredient3} </li>
+      <li><span><i class="fas fa-check-square orange"></i> </span> ${foodObject.strIngredient4} </li>
+      <li><span><i class="fas fa-check-square orange"></i> </span> ${foodObject.strIngredient5} </li>
+      <li><span><i class="fas fa-check-square orange"></i> </span> ${foodObject.strIngredient6} </li>
+      <li><span><i class="fas fa-check-square orange"></i> </span> ${foodObject.strIngredient7} </li>
+      <li><span><i class="fas fa-check-square orange"></i> </span> ${foodObject.strIngredient8} </li>
+      <li><span><i class="fas fa-check-square orange"></i> </span> ${foodObject.strIngredient9} </li>
+      <li><span><i class="fas fa-check-square orange"></i> </span> ${foodObject.strIngredient10} </li>
+    </div>
+  </div>
+    `
+    foodDetails.innerHTML = ingredient;
   })
 }
