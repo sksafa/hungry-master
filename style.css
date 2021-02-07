@@ -29,6 +29,9 @@
     background-color: #fff;
     color: #ff5722;
 }
+.orangeColor{
+    color:#ff5722 !important;
+}
 #errorHandel{
     color:#ff5722;
 }
